@@ -12,8 +12,8 @@
         <h1>Series!</h1>
         <nav>
             <ul>
-                <li><a href="#" title="Home"></a></li>
-                <li><a href="#" title="Test"></a></li>
+                <li><a href="#" title="Home">Home</a></li>
+                <li><a href="#" title="Test">Test</a></li>
             </ul>
         </nav>
     </header>
@@ -21,6 +21,7 @@
         {% block body%}{%endblock%}
     </main>
     <footer>
+        {%include('inc/nav.html.twig')%}
         <div> &copy; {{ "now" | date("Y")}} Series!</div>
     </footer>
 </body>
