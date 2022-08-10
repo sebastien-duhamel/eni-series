@@ -2,22 +2,25 @@
 
 {%block body%}
 <H1>ceci est ma page twig test</H1>
+
+    <div>{{ mySerie.title }}</div>
 <div>
     {# Ceci sert pour les commentaires twig ici je crée une variable #}
     {% set name = "Sébastien" %}
     <h2>Voici mon prénom : {{ name }}</h2>
-    <h2>Voici mon prénom en majuscule gràce aux filtres UPPER: {{ name | upper }}</h2>
+    <h2>Voici mon prénom en majuscule gràce au filtre UPPER :  {{ name | upper }}</h2>
     <h2>Voici le nombre de lettre que contient mon prenom gràce au filtre LENGHT : {{ name | length }}</h2>
 
     {# création d'un tableau et bouclage avec un for #}
     {% set colors = ["orange", "brown", "turquoise", "blue"] %}
     <div>Nombre de couleurs dans mon tableau grace au filtre LENGHT : {{ colors | length }}</div>
     <div>Affichage du tableau avec le filtres join : {{ colors | join(' & ') }}</div>
+    <br>
     {% for color in colors %}
         <div style="background-color: {{ color }}"> Voici la couleur : {{ color | upper }} qui est à la
             position {{ loop.index }}
             grace à la variable loop.index
-        </div>
+        </div><br/>
     {% endfor %}
 
     {# création d'un objet #}
