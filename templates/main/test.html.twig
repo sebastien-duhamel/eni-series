@@ -28,14 +28,14 @@
     {% endfor %}
 
     {# création d'un objet #}
-    {% set voiture = {
-        marque: 'peugeot',
-        year:'2017',
-        modele : 'partner tepee'} %}
+    {% set book = {
+        title: 'apprendre symfony',
+        year:'2022',
+        author : 'moi'} %}
 
-    <h3>{{ voiture.marque }}</h3>
+    <h3>{{ book.title }}</h3>
     <div>
-        {% for key,val in voiture %}
+        {% for key,val in book %}
             <div>{{ key }} : {{ val }}</div>
         {% endfor %}
 
