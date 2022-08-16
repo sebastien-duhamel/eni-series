@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ parent() }} | {{ serie.name }}
+{% endblock %}
+
+{% block body %}
+    <h2>{{ serie.name }}</h2>
+    <div>{{ serie.overview }}</div>
+    <div>{{ serie.vote }}</div>
+{% endblock %}
+

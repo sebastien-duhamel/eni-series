@@ -16,9 +16,16 @@ class SerieController extends AbstractController
      */
     public function list(SerieRepository $serieRepository): Response
     {
+        // récupération de tous les éléments dans la BDD (toutes les lignes)
         //$series = $serieRepository->findAll();
 
-        $series = $serieRepository->findBy([], ['popularity' => 'DESC', 'vote' => 'DESC'], 50);
+
+        //récupération d'éléments dans la bdd avec filtre existant
+        //$series = $serieRepository->findBy([], ['popularity' => 'DESC', 'vote' => 'DESC'], 50);
+
+
+        //récupération avec une requete personnalisée
+        $series = $serieRepository->findBestSeries();
 
         return $this->render('serie/list.html.twig', [
             "series" => $series

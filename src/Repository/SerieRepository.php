@@ -39,6 +39,39 @@ class SerieRepository extends ServiceEntityRepository
         }
     }
 
+
+        // ##########création de nos methodes de recherches dans BDD
+    public function findBestSeries(){
+        // // en DQL
+// $entityManager = $this->getEntityManager(); on ne peut pas récuperer entityManager par l'argument
+// $dql = "
+// SELECT s
+// FROM App\Entity\Serie s
+// WHERE s.popularity > 100
+// AND s.vote > 8
+// ORDER BY s.popularity DESC
+// ";
+// $query = $entityManager->createQuery($dql); création d'un objet query à partir de cette requette DQL
+
+
+        // version QueryBuilder
+        $queryBuilder = $this->createQueryBuilder('s');
+        $queryBuilder->andWhere('s.popularity > 100');
+        $queryBuilder->andWhere('s.vote > 8');
+        $queryBuilder->addOrderBy('s.popularity','DESC');
+        $query = $queryBuilder->getQuery(); //création d'un objet query à partir de cette QUERYBUILDER
+
+        //commun aux 2 façon de faire
+        $query->setMaxResults(50); // filtres pour n'avoir qu'un certain nombre de résultats
+
+        $results = $query->getResult(); // récupération des résultats sous forme de tableau pour envoie à la vue
+
+     //   $results = $query->getOneOrNullResult(); si on sait qu'on va récuperer qu'un seul résultats
+
+        return $results;
+    }
+
+
 //    /**
 //     * @return Serie[] Returns an array of Serie objects
 //     */

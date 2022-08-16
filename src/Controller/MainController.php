@@ -21,6 +21,6 @@ class MainController extends AbstractController
             "title" => "Le prince de Bel Air",
             "year" => 2000,
         ];
-        return $this->render('main/test.html.twig', ["mySerie" => $serie,]);
+        return $this->render('main/test.html.twig', ["mySerie" => $serie]);
     }
 }
