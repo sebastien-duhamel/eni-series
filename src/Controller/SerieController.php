@@ -5,6 +5,7 @@ use App\Form\SerieType;
 use App\Repository\SerieRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 /**
@@ -46,13 +47,30 @@ class SerieController extends AbstractController
     /**
      * @Route("/create", name="create")
      */
-    public function create(): Response
+    public function create(
+        Request $request,
+        EntityManagerInterface $entityManager
+    ): Response
     {
         //création d'une instance de serie
         $serie = new Serie();
+        $serie->setDateCreated(new \DateTime());//attribut nécessaire pour envoi bdd mais retiré du form
         $serieForm = $this -> createForm(SerieType::class, $serie);
 
-        //todo traiter le formulaire
+        dump($serie);//permet de verifier si un objet est hydraté
+        $serieForm -> handleRequest($request);
+        dump($serie);//on voit a present que mon objet serie à des arguments grace à handleRequest
+
+        if($serieForm->isSubmitted()){
+            $entityManager->persist($serie);
+            $entityManager->flush();
+
+            //on crée un message flash pour signaler à l'utilisateur
+            $this->addFlash('success', 'Serie added! Good job.');
+
+            // on va à présent rediriger pour cela on utilise return
+            return $this->redirectToRoute('serie_details',['id' => $serie->getId()]);
+        }
 
         //passage à twig pour déclencher l'affichage du formulaire
         return $this->render('serie/create.html.twig', [
