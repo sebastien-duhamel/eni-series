@@ -61,7 +61,7 @@ class SerieController extends AbstractController
         $serieForm -> handleRequest($request);
         dump($serie);//on voit a present que mon objet serie à des arguments grace à handleRequest
 
-        if($serieForm->isSubmitted()){
+        if($serieForm->isSubmitted() && $serieForm->isValid()){
             $entityManager->persist($serie);
             $entityManager->flush();
 
