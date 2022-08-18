@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Serie;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -56,6 +57,9 @@ class SerieRepository extends ServiceEntityRepository
 
         // version QueryBuilder
         $queryBuilder = $this->createQueryBuilder('s');
+
+        $queryBuilder->leftJoin('s.seasons','seas')
+            ->addSelect('seas');
         $queryBuilder->andWhere('s.popularity > 100');
         $queryBuilder->andWhere('s.vote > 8');
         $queryBuilder->addOrderBy('s.popularity','DESC');
@@ -64,11 +68,15 @@ class SerieRepository extends ServiceEntityRepository
         //commun aux 2 façon de faire
         $query->setMaxResults(50); // filtres pour n'avoir qu'un certain nombre de résultats
 
-        $results = $query->getResult(); // récupération des résultats sous forme de tableau pour envoie à la vue
+        $paginator = new Paginator($query);
+
+        // $results = $query->getResult(); // récupération des résultats sous forme de tableau pour envoie à la vue
 
      //   $results = $query->getOneOrNullResult(); si on sait qu'on va récuperer qu'un seul résultats
 
-        return $results;
+       // return $results; utilisation du paginator
+
+        return $paginator;
     }
 
 
