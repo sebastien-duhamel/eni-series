@@ -20,6 +20,11 @@ class RegistrationController extends AbstractController
     public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, UserAuthenticatorInterface $userAuthenticator, AppAuthenticator $authenticator, EntityManagerInterface $entityManager): Response
     {
         $user = new User();
+        //$user->setRoles(['ROLE_ADMIN']);//il faut au moins une fois le faire pour avoir un utilisateur ADMIN
+        //ou alors il faudra aller dans la bdd modifier le role directement
+
+        $user->setRoles(['ROlE_USER']); //à chaque fois qu'un utilisateur se crée il aura ce role
+
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
 
